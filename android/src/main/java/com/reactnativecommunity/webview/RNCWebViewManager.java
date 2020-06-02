@@ -955,6 +955,10 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
       final RNCWebView rncWebView = (RNCWebView) view;
       final boolean isJsDebugging = ((ReactContext) view.getContext()).getJavaScriptContextHolder().get() == 0;
 
+      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && url.startsWith("file://")) {
+        return false;
+      }
+
       if (!isJsDebugging && rncWebView.mCatalystInstance != null) {
         final Pair<Integer, AtomicReference<ShouldOverrideCallbackState>> lock = RNCWebViewModule.shouldOverrideUrlLoadingLock.getNewLock();
         final int lockIdentifier = lock.first;
@@ -1002,6 +1006,9 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     @TargetApi(Build.VERSION_CODES.N)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+      if (!request.isForMainFrame()) {
+        return false;
+      }
       final String url = request.getUrl().toString();
       return this.shouldOverrideUrlLoading(view, url);
     }
