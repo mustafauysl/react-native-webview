@@ -1,3 +1,5 @@
+This fork fixes iframe redirect on local files [see original issue](https://github.com/react-native-webview/react-native-webview/issues/560)
+
 # React Native WebView - a Modern, Cross-Platform WebView for React Native
 
 [![star this repo](http://githubbadges.com/star.svg?user=react-native-webview&repo=react-native-webview&style=flat)](https://github.com/react-native-webview/react-native-webview)
