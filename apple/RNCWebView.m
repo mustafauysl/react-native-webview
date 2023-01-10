@@ -1173,6 +1173,10 @@ RCTAutoInsetsProtocol>
       @"navigationType": navigationTypes[@(navigationType)],
       @"isTopFrame": @(isTopFrame)
     }];
+    if (!navigationAction.targetFrame.isMainFrame){
+      decisionHandler(WKNavigationActionPolicyAllow);
+      return;
+    }
     if (![self.delegate webView:self
       shouldStartLoadForRequest:event
                    withCallback:_onShouldStartLoadWithRequest]) {
